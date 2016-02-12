@@ -35,25 +35,19 @@ public class Robot extends IterativeRobot {
     //private static final int buttonY = ;// On/off
     //private static final int topTrigger = ;// On/off
     private static final int bottomTrigger = 3;// On/off; positive left
-
-    private static final double turnRateScale = 0.8;
-    
-    private static final double pullBallInSpeed = 0.5;
-    private static final double shootBallOutSpeed = 1.0;
     
     private Joystick driveStick; 
     
-    private Talon leftMotorA;
-    private Talon leftMotorB;
+    private BallWheels ballWheels;
+    private QuadArcadeDrive drive;
     
-    private Talon rightMotorA; 
-    private Talon rightMotorB;
-    
-    private Jaguar leftBallWheelMotor; 
-    private Jaguar rightBallWheelMotor; 
-    
-    private RobotDrive driveA; 
-    private RobotDrive driveB;
+    // Temporary stuff for adjusting values
+    private Button adjMoveWarpUp;
+    private Button adjMoveWarpDown;
+    private Button adjTurnWarpUp;
+    private Button adjTurnWarpDown;
+    private Button adjTurnScaleUp;
+    private Button adjTurnScaleDown;
 	
     /**
      * This function is run when the robot is first started up and should be
@@ -65,19 +59,19 @@ public class Robot extends IterativeRobot {
         chooser.addObject("My Auto", customAuto);
         SmartDashboard.putData("Auto choices", chooser);*/
         
-        driveStick = new Joystick(1); 
+        driveStick = new Joystick(1);
         
-    	leftMotorA = new Talon(0); 
-        leftMotorB = new Talon(1); 
+        drive = new QuadArcadeDrive(0, 1, 2, 3);
+        ballWheels = new BallWheels(3, 5);
         
-        rightMotorA = new Talon(2); 
-        rightMotorB = new Talon(3); 
+        drive.setWarping(1.5, 1.5);
         
-        leftBallWheelMotor = new Jaguar(4); 
-        rightBallWheelMotor = new Jaguar(5); 
-        
-        driveA = new RobotDrive(leftMotorA, rightMotorA); 
-        driveB = new RobotDrive(leftMotorB, rightMotorB); 
+        adjMoveWarpUp = new Button(driveStick, 7);
+        adjMoveWarpDown = new Button(driveStick, 8);
+        adjTurnWarpUp = new Button(driveStick, 9);
+        adjTurnWarpDown = new Button(driveStick, 10);
+        adjTurnScaleUp = new Button(driveStick, 11);
+        adjTurnScaleDown = new Button(driveStick, 12);
     }
     
 	/**
@@ -94,6 +88,16 @@ public class Robot extends IterativeRobot {
 //		autoSelected = SmartDashboard.getString("Auto Selector", defaultAuto);
 		System.out.println("Auto selected: " + autoSelected);*/
     }
+    
+    private double clamp(double in, double min, double max) {
+    	if (in < min) {
+    		return min;
+    	} else if (in > max) {
+    		return max;
+    	}
+    	
+    	return in;
+    }
 
     /**
      * This function is called periodically during autonomous
@@ -107,38 +111,53 @@ public class Robot extends IterativeRobot {
     	default:
     	//Put default auto code here
             break;*/
+    }
+    
+    private void adjustDriveConfiguration() {
+    	if (adjMoveWarpUp.justPressed()) {
+    		drive.setWarping(clamp(drive.getMoveWarp() * 1.2, 1.0, 3.0),
+    				drive.getTurnWarp());
+    	} else if (adjMoveWarpDown.justPressed()) {
+    		drive.setWarping(clamp(drive.getMoveWarp() * 0.8, 1.0, 3.0),
+    				drive.getTurnWarp());
     	}
+    	
+    	if (adjTurnWarpUp.justPressed()) {
+    		drive.setWarping(drive.getMoveWarp(),
+    				clamp(drive.getTurnWarp() * 1.2, 1.0, 3.0));
+    	} else if (adjTurnWarpDown.justPressed()) {
+    		drive.setWarping(drive.getMoveWarp(),
+    				clamp(drive.getTurnWarp() * 0.8, 1.0, 3.0));
+    	}
+    	
+    	if (adjTurnScaleUp.justPressed()) {
+    		drive.setTurnRateScale(clamp(drive.getTurnScale() * 1.2, 0.1, 1.0));
+    	} else if (adjTurnScaleDown.justPressed()) {
+    		drive.setTurnRateScale(clamp(drive.getTurnScale() * 0.8, 0.1, 1.0));
+    	}
+    }
 
     /**
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
     	
-    	//Can be modularized to use 1 class for controlling shooter.
-    	//Class is created, called "BallWheels" 
-    	
     	if(driveStick.getRawButton(5))// Suck ball in
         {
-        	leftBallWheelMotor.set(pullBallInSpeed);
-            rightBallWheelMotor.set(-pullBallInSpeed);
+        	ballWheels.pullBallIn();
         }
         else if(driveStick.getRawButton(3))// Shoot ball out
         {
-        	leftBallWheelMotor.set(-shootBallOutSpeed);
-            rightBallWheelMotor.set(shootBallOutSpeed);
+        	ballWheels.shootBallOut();
         }
         else
         {
-        	leftBallWheelMotor.set(0.0);
-            rightBallWheelMotor.set(0.0);
+        	ballWheels.stop();
         }
     	
-    	driveA.arcadeDrive(-driveStick.getY(), -driveStick.getTwist() * turnRateScale);
-        driveB.arcadeDrive(-driveStick.getY(), -driveStick.getTwist() * turnRateScale);
+    	drive.drive(-driveStick.getY(), -driveStick.getTwist());
     	
-    	//driveA.arcadeDrive(driveStick.getTwist(), -driveStick.getY());
-        //driveB.arcadeDrive(driveStick.getTwist(), -driveStick.getY());
-        
+    	adjustDriveConfiguration();
     }    
     /**
      * This function is called periodically during test mode
