@@ -73,13 +73,13 @@ public class Robot extends IterativeRobot {
         // pointers. Bad news. Don't move it.
        // oi = new OI();
     
-    ballWheels = new BallWheels(1, 2);
+    ballWheels = new BallWheels(4, 5);
 
-    leftMotorA = new Talon(3);
-    leftMotorB = new Talon(4);
+    leftMotorA = new Talon(0);
+    leftMotorB = new Talon(1);
 
-    rightMotorA = new Talon(5);
-    rightMotorB = new Talon(6);
+    rightMotorA = new Talon(2);
+    rightMotorB = new Talon(3);
 
     driveA = new RobotDrive(leftMotorA, rightMotorA);
     driveB = new RobotDrive(leftMotorB, rightMotorB);
