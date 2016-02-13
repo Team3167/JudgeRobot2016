@@ -1,14 +1,17 @@
 
 package org.usfirst.frc.team3167.robot;
 
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //import edu.wpi.first.wpilibj.Timer;
 //import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 //import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.vision.USBCamera;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -48,6 +51,8 @@ public class Robot extends IterativeRobot {
     private Button adjTurnWarpDown;
     private Button adjTurnScaleUp;
     private Button adjTurnScaleDown;
+    
+    //private SmartDashboard smartDashboard; 
 	
     /**
      * This function is run when the robot is first started up and should be
@@ -62,7 +67,7 @@ public class Robot extends IterativeRobot {
         driveStick = new Joystick(1);
         
         drive = new QuadArcadeDrive(0, 1, 2, 3);
-        ballWheels = new BallWheels(3, 5);
+        ballWheels = new BallWheels(4, 5);
         
         drive.setWarping(1.5, 1.5);
         
@@ -72,6 +77,15 @@ public class Robot extends IterativeRobot {
         adjTurnWarpDown = new Button(driveStick, 10);
         adjTurnScaleUp = new Button(driveStick, 11);
         adjTurnScaleDown = new Button(driveStick, 12);
+        
+        //Start capturing and displaying video to FRC PC Dashboard or the SmarDashboard.
+        //Open "Java" smart dashboard from driver station to use.
+        
+        //TODO: Fix issue of not connectiong on 2go pc. 
+        CameraServer camServer = CameraServer.getInstance(); 
+     	camServer.setQuality(30);
+    	camServer.startAutomaticCapture("cam0");
+        
     }
     
 	/**
@@ -141,7 +155,7 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
-    	
+
     	if(driveStick.getRawButton(5))// Suck ball in
         {
         	ballWheels.pullBallIn();
