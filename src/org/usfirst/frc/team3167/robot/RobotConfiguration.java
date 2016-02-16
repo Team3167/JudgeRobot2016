@@ -8,7 +8,7 @@ package org.usfirst.frc.team3167.robot;
  */
 public class RobotConfiguration {
     
-	private static final int leftStickUpDown = 2;// positive down
+    private static final int leftStickUpDown = 2;// positive down
     private static final int leftStickLeftRight = 1;// positive right
     private static final int rightStickUpDown = 5;// positive down
     private static final int rightStickLeftRight = 4;// positive right
