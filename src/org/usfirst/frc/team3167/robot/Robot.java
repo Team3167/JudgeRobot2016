@@ -85,6 +85,8 @@ public class Robot extends IterativeRobot {
         
         vision.enable();
         
+        vision.enable(); 
+        
         //Start capturing and displaying video to FRC PC Dashboard or the SmarDashboard.
         //Open "Java" smart dashboard from driver station to use.
         
