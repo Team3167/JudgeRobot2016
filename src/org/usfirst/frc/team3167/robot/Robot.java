@@ -75,7 +75,6 @@ public class Robot extends IterativeRobot {
         adjTurnScaleUp = new Button(driveStick, 11);
         adjTurnScaleDown = new Button(driveStick, 12);
         
-        
         //Start capturing and displaying video to FRC PC Dashboard or the SmarDashboard.
         //Open "Java" smart dashboard from driver station to use.
         vision.enable();
