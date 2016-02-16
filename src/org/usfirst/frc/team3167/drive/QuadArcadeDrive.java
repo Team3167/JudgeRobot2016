@@ -1,4 +1,6 @@
-package org.usfirst.frc.team3167.robot;
+package org.usfirst.frc.team3167.drive;
+
+import org.usfirst.frc.team3167.robot.InputWarper;
 
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Talon;
