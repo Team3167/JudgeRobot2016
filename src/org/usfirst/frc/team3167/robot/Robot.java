@@ -40,9 +40,11 @@ public class Robot extends IterativeRobot {
     private static final int bottomTrigger = 3;// On/off; positive left
     
     private Joystick driveStick; 
+    private Joystick driveStick2; 
     
     private BallWheels ballWheels;
     private QuadArcadeDrive drive;
+    private Vision vision; 
     
     // Temporary stuff for adjusting values
     private Button adjMoveWarpUp;
@@ -51,6 +53,7 @@ public class Robot extends IterativeRobot {
     private Button adjTurnWarpDown;
     private Button adjTurnScaleUp;
     private Button adjTurnScaleDown;
+     
     
     //private SmartDashboard smartDashboard; 
 	
@@ -65,9 +68,11 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putData("Auto choices", chooser);*/
         
         driveStick = new Joystick(1);
+        driveStick2 = new Joystick(2); 
         
         drive = new QuadArcadeDrive(0, 1, 2, 3);
         ballWheels = new BallWheels(4, 5);
+        vision = new Vision(); 
         
         drive.setWarping(1.5, 1.5);
         
@@ -78,13 +83,10 @@ public class Robot extends IterativeRobot {
         adjTurnScaleUp = new Button(driveStick, 11);
         adjTurnScaleDown = new Button(driveStick, 12);
         
+        vision.enable();
+        
         //Start capturing and displaying video to FRC PC Dashboard or the SmarDashboard.
         //Open "Java" smart dashboard from driver station to use.
-        
-        //TODO: Fix issue of not connectiong on 2go pc. 
-        CameraServer camServer = CameraServer.getInstance(); 
-     	camServer.setQuality(30);
-    	camServer.startAutomaticCapture("cam0");
         
     }
     
@@ -156,11 +158,11 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
 
-    	if(driveStick.getRawButton(5))// Suck ball in
+    	if(driveStick.getRawButton(5) || driveStick2.getRawButton(5))// Suck ball in
         {
         	ballWheels.pullBallIn();
         }
-        else if(driveStick.getRawButton(3))// Shoot ball out
+        else if(driveStick.getRawButton(3) || driveStick2.getRawButton(3))// Shoot ball out
         {
         	ballWheels.shootBallOut();
         }
