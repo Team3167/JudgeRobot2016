@@ -25,19 +25,6 @@ public class Robot extends IterativeRobot {
     final String customAuto = "My Auto";
     String autoSelected;
     SendableChooser chooser;*/
-   
-    private static final int leftStickUpDown = 2;// positive down
-    private static final int leftStickLeftRight = 1;// positive right
-    private static final int rightStickUpDown = 5;// positive down
-    private static final int rightStickLeftRight = 4;// positive right
-    //private static final int directionalPadUpDown = ;
-    private static final int directionalPadLeftRight = 6;// On/off; positive right
-    //private static final int buttonA = ;// On/off
-    //private static final int buttonB = ;// On/off
-    //private static final int buttonX = ;// On/off
-    //private static final int buttonY = ;// On/off
-    //private static final int topTrigger = ;// On/off
-    private static final int bottomTrigger = 3;// On/off; positive left
     
     private Joystick driveStick; 
     private Joystick driveStick2; 
@@ -72,7 +59,7 @@ public class Robot extends IterativeRobot {
         
         drive = new QuadArcadeDrive(0, 1, 2, 3);
         ballWheels = new BallWheels(4, 5);
-        vision = new Vision(); 
+        vision = new Vision();
         
         drive.setWarping(1.5, 1.5);
         
