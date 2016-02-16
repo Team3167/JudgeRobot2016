@@ -97,7 +97,6 @@ public class Robot extends IterativeRobot {
     	} else if (in > max) {
     		return max;
     	}
-    	
     	return in;
     }
 
