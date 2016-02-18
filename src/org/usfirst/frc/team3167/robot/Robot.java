@@ -1,6 +1,7 @@
 
 package org.usfirst.frc.team3167.robot;
 
+import org.usfirst.frc.team3167.autonomous.Autonomous;
 import org.usfirst.frc.team3167.ballControl.BallWheels;
 import org.usfirst.frc.team3167.ballControl.Button;
 import org.usfirst.frc.team3167.drive.QuadArcadeDrive;
@@ -37,6 +38,7 @@ public class Robot extends IterativeRobot {
     private BallWheels ballWheels;
     private QuadArcadeDrive drive;
     private Vision vision; 
+    private Autonomous autonomous;
     
     // Temporary stuff for adjusting values
     private Button adjMoveWarpUp;
@@ -65,6 +67,8 @@ public class Robot extends IterativeRobot {
         drive = new QuadArcadeDrive(0, 1, 2, 3);
         ballWheels = new BallWheels(4, 5);
         vision = new Vision();
+        autonomous = new Autonomous(0, 1, 2, 3); 
+        
         
         drive.setWarping(1.5, 1.5);
         
@@ -108,14 +112,9 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during autonomous
      */
     public void autonomousPeriodic() {
-    	/*switch(autoSelected) {
-    	case customAuto:
-        //Put custom auto code here   
-            break;
-    	case defaultAuto:
-    	default:
-    	//Put default auto code here
-            break;*/
+    	
+    	//Call method "run" from class Autonomous, during autonomous
+    	autonomous.run(); 
     }
     
     private void adjustDriveConfiguration() {
