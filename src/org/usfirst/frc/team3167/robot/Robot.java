@@ -64,11 +64,10 @@ public class Robot extends IterativeRobot {
         driveStick = new Joystick(1);
         driveStick2 = new Joystick(2); 
         
-        drive = new QuadArcadeDrive(0, 1, 2, 3);
+        drive = new QuadArcadeDrive();
         ballWheels = new BallWheels(4, 5);
         vision = new Vision();
-        autonomous = new Autonomous(0, 1, 2, 3); 
-        
+        autonomous = new Autonomous();        
         
         drive.setWarping(1.5, 1.5);
         

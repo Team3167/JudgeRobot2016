@@ -1,5 +1,7 @@
 package org.usfirst.frc.team3167.robot;
 
+import edu.wpi.first.wpilibj.Talon;
+
 /*
  * Configuartion for xbox controller axis and button input values.
  * None of these are relevant for the current Joystick we are
@@ -8,6 +10,11 @@ package org.usfirst.frc.team3167.robot;
  */
 public class RobotConfiguration {
     
+	public Talon leftMotorA = new Talon(0); 
+	public Talon leftMotorB = new Talon(1); 
+	public Talon rightMotorA = new Talon(2); 
+	public Talon rightMotorB = new Talon(3);
+	
     private static final int leftStickUpDown = 2;// positive down
     private static final int leftStickLeftRight = 1;// positive right
     private static final int rightStickUpDown = 5;// positive down

@@ -1,12 +1,16 @@
 package org.usfirst.frc.team3167.drive;
 
 import org.usfirst.frc.team3167.robot.InputWarper;
+import org.usfirst.frc.team3167.robot.Robot;
+import org.usfirst.frc.team3167.robot.RobotConfiguration;
 
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Talon;
 
 public class QuadArcadeDrive {
 
+	private RobotConfiguration config = new RobotConfiguration();  
+	
 	private RobotDrive driveA; 
     private RobotDrive driveB;
     
@@ -16,9 +20,10 @@ public class QuadArcadeDrive {
     private InputWarper moveWarper;
     private InputWarper turnWarper;
     
-	public QuadArcadeDrive(int leftChannelA, int leftChannelB, int rightChannelA, int rightChannelB) {
-		driveA = new RobotDrive(new Talon(leftChannelA), new Talon(rightChannelA)); 
-        driveB = new RobotDrive(new Talon(leftChannelB), new Talon(rightChannelB));
+	public QuadArcadeDrive() {
+
+		driveA = new RobotDrive(config.leftMotorA, config.rightMotorA); 
+        driveB = new RobotDrive(config.leftMotorB, config.rightMotorB);
         
         moveWarper = new InputWarper();
         turnWarper = new InputWarper();
