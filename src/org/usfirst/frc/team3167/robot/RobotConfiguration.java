@@ -10,10 +10,10 @@ import edu.wpi.first.wpilibj.Talon;
  */
 public class RobotConfiguration {
     
-	public Talon leftMotorA = new Talon(0); 
-	public Talon leftMotorB = new Talon(1); 
-	public Talon rightMotorA = new Talon(2); 
-	public Talon rightMotorB = new Talon(3);
+	public static Talon leftMotorA = new Talon(0); 
+	public static Talon leftMotorB = new Talon(1); 
+	public static Talon rightMotorA = new Talon(2); 
+	public static Talon rightMotorB = new Talon(3);
 	
     private static final int leftStickUpDown = 2;// positive down
     private static final int leftStickLeftRight = 1;// positive right

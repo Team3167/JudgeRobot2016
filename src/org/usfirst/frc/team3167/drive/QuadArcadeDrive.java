@@ -8,8 +8,6 @@ import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Talon;
 
 public class QuadArcadeDrive {
-
-	private RobotConfiguration config = new RobotConfiguration();  
 	
 	private RobotDrive driveA; 
     private RobotDrive driveB;
@@ -22,8 +20,8 @@ public class QuadArcadeDrive {
     
 	public QuadArcadeDrive() {
 
-		driveA = new RobotDrive(config.leftMotorA, config.rightMotorA); 
-        driveB = new RobotDrive(config.leftMotorB, config.rightMotorB);
+		driveA = new RobotDrive(RobotConfiguration.leftMotorA, RobotConfiguration.rightMotorA); 
+        driveB = new RobotDrive(RobotConfiguration.leftMotorB, RobotConfiguration.rightMotorB);
         
         moveWarper = new InputWarper();
         turnWarper = new InputWarper();
