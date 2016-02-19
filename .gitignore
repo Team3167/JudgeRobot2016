@@ -1,6 +1,5 @@
-/bin
-/dist
-/build/org
+bin/
+dist/
 *.class
 *~
 /Debug/
