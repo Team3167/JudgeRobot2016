@@ -48,7 +48,6 @@ public class Robot extends IterativeRobot {
     private Button adjTurnScaleUp;
     private Button adjTurnScaleDown;
      
-    
     //private SmartDashboard smartDashboard; 
 	
     /**
@@ -64,10 +63,9 @@ public class Robot extends IterativeRobot {
         driveStick = new Joystick(1);
         driveStick2 = new Joystick(2); 
         
-        drive = new QuadArcadeDrive();
+        drive = new QuadArcadeDrive(0, 1, 2, 3);
         ballWheels = new BallWheels(4, 5);
-        vision = new Vision();
-        autonomous = new Autonomous();        
+        vision = new Vision();       
         
         drive.setWarping(1.5, 1.5);
         
@@ -92,10 +90,13 @@ public class Robot extends IterativeRobot {
 	 * You can add additional auto modes by adding additional comparisons to the switch structure below with additional strings.
 	 * If using the SendableChooser make sure to add them to the chooser code above as well.
 	 */
+    private static final double autoDriveTime = 7;// [sec]
+    private static final double autoDriveSpeed = 0.8;// Not sure this is the best value
     public void autonomousInit() {
     	/*autoSelected = (String) chooser.getSelected();
 //		autoSelected = SmartDashboard.getString("Auto Selector", defaultAuto);
 		System.out.println("Auto selected: " + autoSelected);*/
+    	autonomous = new Autonomous(drive, autoDriveSpeed, autoDriveTime); 
     }
     
     private double clamp(double in, double min, double max) {
@@ -113,7 +114,7 @@ public class Robot extends IterativeRobot {
     public void autonomousPeriodic() {
     	
     	//Call method "run" from class Autonomous, during autonomous
-    	autonomous.run(); 
+    	autonomous.run();
     }
     
     private void adjustDriveConfiguration() {

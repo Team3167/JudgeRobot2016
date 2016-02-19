@@ -1,5 +1,6 @@
 package org.usfirst.frc.team3167.autonomous;
 
+import org.usfirst.frc.team3167.drive.QuadArcadeDrive;
 import org.usfirst.frc.team3167.robot.RobotConfiguration;
 
 import edu.wpi.first.wpilibj.Talon;
@@ -7,25 +8,29 @@ import edu.wpi.first.wpilibj.Timer;
 
 public class Autonomous {
 			
-	private static final double halfSpeed = 0.5; 
-	private static final double fullSpeed = 1.0;  
+	private final double autoSpeed;
+	private final double driveTime;// [sec]
 	
-	Timer timer = new Timer(); 
+	private final QuadArcadeDrive drive;
+	
+	// Can't use a standard java timer in a real-time application
+	// We'll keep track of time on our own
+	private double elapsedTime = 0.0;// [sec]
+	
+	public Autonomous(QuadArcadeDrive drive, double autoSpeed, double driveTime) {
+		this.drive = drive;
+		this.autoSpeed = autoSpeed;
+		this.driveTime = driveTime;
+	}
 
 	public void run() {
 		
-		timer.start();
-		
-		//TODO: Find which motors to spin in reverse and which ones to spin regularly
-		//TODO: Check if all motors spin at same rate, if not, adjust in code
-		RobotConfiguration.leftMotorA.set(fullSpeed);
-		RobotConfiguration.leftMotorB.set(fullSpeed);
-		
-		RobotConfiguration.rightMotorA.set(-fullSpeed);
-		RobotConfiguration.rightMotorB.set(-fullSpeed);
-		
-		//TODO: Find how long we want the robot to drive forward
-		timer.delay(7);	
+		if (elapsedTime < driveTime) {
+			drive.drive(autoSpeed, 0.0);
+			elapsedTime += RobotConfiguration.timeStep;
+		} else {
+			drive.drive(0.0, 0.0);
+		}
 	}
 }
 
