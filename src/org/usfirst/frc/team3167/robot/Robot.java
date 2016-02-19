@@ -63,7 +63,7 @@ public class Robot extends IterativeRobot {
         driveStick = new Joystick(1);
         driveStick2 = new Joystick(2); 
         
-        drive = new QuadArcadeDrive(0, 1, 2, 3);
+        drive = new QuadArcadeDrive(0, 1, 2, 3, 0);
         ballWheels = new BallWheels(4, 5);
         vision = new Vision();       
         
@@ -90,6 +90,8 @@ public class Robot extends IterativeRobot {
 	 * You can add additional auto modes by adding additional comparisons to the switch structure below with additional strings.
 	 * If using the SendableChooser make sure to add them to the chooser code above as well.
 	 */
+    // Distance to cover during autonomous is about 74 inches
+    // +/- depending on placement of robot
     private static final double autoDriveTime = 3.0;// [sec]
     private static final double autoDriveSpeed = 0.8;// Not sure this is the best value
     public void autonomousInit() {
