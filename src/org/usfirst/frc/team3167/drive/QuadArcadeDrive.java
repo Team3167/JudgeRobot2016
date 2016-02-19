@@ -29,7 +29,7 @@ public class QuadArcadeDrive {
 		leftMotorA = new Talon(leftChannelA);
 		leftMotorB = new Talon(leftChannelB);
 		rightMotorA = new Talon(rightChannelA);
-		rightMotorA = new Talon(rightChannelB);
+		rightMotorB = new Talon(rightChannelB);
 		
 		driveA = new RobotDrive(leftMotorA, rightMotorA); 
         driveB = new RobotDrive(leftMotorB, rightMotorB);

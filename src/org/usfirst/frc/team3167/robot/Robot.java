@@ -90,7 +90,7 @@ public class Robot extends IterativeRobot {
 	 * You can add additional auto modes by adding additional comparisons to the switch structure below with additional strings.
 	 * If using the SendableChooser make sure to add them to the chooser code above as well.
 	 */
-    private static final double autoDriveTime = 7;// [sec]
+    private static final double autoDriveTime = 3.0;// [sec]
     private static final double autoDriveSpeed = 0.8;// Not sure this is the best value
     public void autonomousInit() {
     	/*autoSelected = (String) chooser.getSelected();
