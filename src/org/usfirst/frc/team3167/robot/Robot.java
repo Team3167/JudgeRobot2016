@@ -46,9 +46,7 @@ public class Robot extends IterativeRobot {
     private Button adjTurnWarpUp;
     private Button adjTurnWarpDown;
     private Button adjTurnScaleUp;
-    private Button adjTurnScaleDown;
-     
-    //private SmartDashboard smartDashboard; 
+    private Button adjTurnScaleDown; 
 	
     /**
      * This function is run when the robot is first started up and should be
@@ -93,7 +91,7 @@ public class Robot extends IterativeRobot {
     // Distance to cover during autonomous is about 74 inches
     // +/- depending on placement of robot
     private static final double autoDriveTime = 3.0;// [sec]
-    private static final double autoDriveSpeed = 0.8;// Not sure this is the best value
+    private static final double autoDriveSpeed = 0.75;// Not sure this is the best value
     public void autonomousInit() {
     	/*autoSelected = (String) chooser.getSelected();
 //		autoSelected = SmartDashboard.getString("Auto Selector", defaultAuto);
@@ -148,11 +146,11 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
 
-    	if(driveStick.getRawButton(5) || driveStick2.getRawButton(5))// Suck ball in
+    	if(driveStick.getRawButton(2) || driveStick2.getRawButton(2))// Suck ball in
         {
         	ballWheels.pullBallIn();
         }
-        else if(driveStick.getRawButton(3) || driveStick2.getRawButton(3))// Shoot ball out
+        else if(driveStick.getRawButton(1) || driveStick2.getRawButton(1))// Shoot ball out
         {
         	ballWheels.shootBallOut();
         }
@@ -164,6 +162,7 @@ public class Robot extends IterativeRobot {
     	drive.drive(-driveStick.getY(), -driveStick.getTwist());
     	
     	adjustDriveConfiguration();
+    	
     }    
     /**
      * This function is called periodically during test mode

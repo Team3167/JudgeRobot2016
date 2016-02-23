@@ -5,8 +5,10 @@ import org.usfirst.frc.team3167.robot.Robot;
 import org.usfirst.frc.team3167.robot.RobotConfiguration;
 
 import edu.wpi.first.wpilibj.AnalogGyro;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class QuadArcadeDrive {
 	
@@ -14,6 +16,7 @@ public class QuadArcadeDrive {
 	private final Talon leftMotorB;
 	private final Talon rightMotorA;
 	private final Talon rightMotorB;
+
 	
 	private final RobotDrive driveA; 
     private final RobotDrive driveB;
@@ -26,16 +29,16 @@ public class QuadArcadeDrive {
     private final InputWarper moveWarper;
     private final InputWarper turnWarper;
     
-    private final double turnLoopKp = 0.8;// [1/%]
-    private final double turnLoopTi = 3.0;// [sec]
+    private final double turnLoopKp = 0.4;// [1/%]
+    private final double turnLoopTi = 3.2;// [sec]
     private double turnErrorIntegral = 0.0;
-    private final double maxTurnErrorIntegral = 0.8;
-    private final double maxRotationRate = 300.0;// [deg/sec]
+    private final double maxTurnErrorIntegral = 0.75;
+    private final double maxRotationRate = 1800.0;// [deg/sec]
     
-	public QuadArcadeDrive(int leftChannelA, int leftChannelB,
+    public QuadArcadeDrive(int leftChannelA, int leftChannelB,
 			int rightChannelA, int rightChannelB) {
-
-		leftMotorA = new Talon(leftChannelA);
+ 
+    	leftMotorA = new Talon(leftChannelA);
 		leftMotorB = new Talon(leftChannelB);
 		rightMotorA = new Talon(rightChannelA);
 		rightMotorB = new Talon(rightChannelB);
@@ -47,7 +50,7 @@ public class QuadArcadeDrive {
         turnWarper = new InputWarper();
         
         gyro = null;
-	}
+   	}
 	
 	public QuadArcadeDrive(int leftChannelA, int leftChannelB,
 			int rightChannelA, int rightChannelB, int gyroChannel) {
@@ -64,7 +67,8 @@ public class QuadArcadeDrive {
         turnWarper = new InputWarper();
         
         gyro = new AnalogGyro(gyroChannel);
-        gyro.setSensitivity(0.007);// 7 mV/deg/sec
+        //Find ideal sensitivity
+        gyro.setSensitivity(0.0007);// 7 mV/deg/sec
 	}
 	
 	public void setTurnRateScale(double newScale) {
@@ -91,7 +95,8 @@ public class QuadArcadeDrive {
 				}
 				
 				rotateValue = turnLoopKp * (error
-						+ turnErrorIntegral / turnLoopTi);
+						+ turnErrorIntegral / turnLoopTi);				
+				
 			} else {
 				rotateValue = turnLoopKp * error;
 			}
